@@ -3,6 +3,7 @@ import { BooksRepository } from './books.repository';
 import { Book } from './book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UsersRepository } from '../users/users.repository';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 @Injectable()
 export class BooksService {
@@ -23,6 +24,15 @@ export class BooksService {
         const user = await this.usersRepository.findByIdOrNotFoundFail(userId);
 
         const book = Book.createBook(dto, userId, user.age);
+
+        await this.booksRepository.save(book);
+    }
+
+    // Обновить информацию о книге
+    async updateBook(id: number, dto: UpdateBookDto, userId: number): Promise<void> {
+        const book = await this.booksRepository.findOneOrNotFoundFail(id);
+
+        book.updateBook(dto, userId);
 
         await this.booksRepository.save(book);
     }

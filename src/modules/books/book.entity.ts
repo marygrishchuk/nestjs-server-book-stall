@@ -2,6 +2,7 @@ import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../core/entity/base.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { ForbiddenException } from '@nestjs/common';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 @Entity('books')
 export class Book extends BaseEntity {
@@ -29,8 +30,20 @@ export class Book extends BaseEntity {
         book.title = dto.title;
         book.ageRestriction = dto.ageRestriction;
         book.author = dto.author;
+        book.image = dto.image;
         book.ownerId = userId;
 
         return book;
+    }
+
+    updateBook(dto: UpdateBookDto, userId: number) {
+        if (userId !== this.ownerId) {
+            throw new ForbiddenException();
+        }
+
+        this.title = dto.title ?? this.title;
+        this.ageRestriction = dto.ageRestriction ?? this.ageRestriction;
+        this.author = dto.author ?? this.author;
+        this.image = dto.image ?? this.image;
     }
 }

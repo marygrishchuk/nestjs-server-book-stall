@@ -41,9 +41,9 @@ export class BooksController {
 
     // Обновить информацию о книге
     @Put(':id')
-    async updateBook(@Param('id') id: number, @Body() bookDto: UpdateBookDto) {
-        // необходимо вызвать соответствующий метод сервиса и вернуть результат
-        //const result = await this.booksService.someMethod();
+    @UseGuards(JwtAuthGuard)
+    async updateBook(@Param('id') id: number, @Body() bookDto: UpdateBookDto, @Request() req: any) {
+        return this.booksService.updateBook(id, bookDto, req.user.userId);
     }
 
     // Удалить книгу
