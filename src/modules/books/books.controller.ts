@@ -3,9 +3,11 @@ import {
     Controller,
     Delete,
     Get,
+    HttpCode,
     Param,
     Post,
     Put,
+    Request,
     UseGuards,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
@@ -31,9 +33,10 @@ export class BooksController {
 
     // Создать новую книгу
     @Post()
+    @HttpCode(201)
     @UseGuards(JwtAuthGuard)
-    async createBook(@Body() bookDto: CreateBookDto) {
-        return this.booksService.createBook(bookDto);
+    async createBook(@Body() bookDto: CreateBookDto, @Request() req: any) {
+        return this.booksService.createBook(bookDto, req.user.userId);
     }
 
     // Обновить информацию о книге
