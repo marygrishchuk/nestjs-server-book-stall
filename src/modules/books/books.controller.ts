@@ -14,6 +14,7 @@ import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { JwtAuthGuard } from 'src/core/guards/jwt-auth-guard';
+import { OptionalJwtGuard } from 'src/core/guards/optional-jwt-guard';
 
 @Controller('books')
 export class BooksController {
@@ -27,9 +28,9 @@ export class BooksController {
 
     // Получить книгу по ID
     @Get(':id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(OptionalJwtGuard)
     async getBookById(@Param('id') id: number, @Request() req: any) {
-        return this.booksService.getBookById(id, req.user.userId);
+        return this.booksService.getBookById(id, req.user?.userId);
     }
 
     // Создать новую книгу

@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { BooksRepository } from './books.repository';
 import { Book } from './book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -15,11 +15,14 @@ export class BooksService {
     }
 
     // Получить книгу по ID
-    async getBookById(id: number, userId: number): Promise<Book> {
-        const user = await this.usersRepository.findByIdOrNotFoundFail(userId);
+    async getBookById(id: number, userId?: number): Promise<Book> {
         const book = await this.booksRepository.findOneOrNotFoundFail(id);
-        if (user.age < 18 && book.ageRestriction >= 18) {
-            throw new ForbiddenException('too young, Bro')
+        if (book.ageRestriction >= 18) {
+            if (!userId) throw new UnauthorizedException();
+            const user = await this.usersRepository.findByIdOrNotFoundFail(userId);
+            if (user.age < 18) {
+                throw new ForbiddenException('too young, Bro');
+            }
         }
         return this.booksRepository.findOneOrNotFoundFail(id);
     }
