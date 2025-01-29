@@ -1,3 +1,10 @@
+# NestJS Server app for a [Book Stall app](https://nest-webinar-front.vercel.app/)
+
+It's set up to work with a local Postgres Database.
+
+
+## About Nest:
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
