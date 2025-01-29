@@ -27,8 +27,9 @@ export class BooksController {
 
     // Получить книгу по ID
     @Get(':id')
-    async getBookById(@Param('id') id: number) {
-        return this.booksService.getBookById(id);
+    @UseGuards(JwtAuthGuard)
+    async getBookById(@Param('id') id: number, @Request() req: any) {
+        return this.booksService.getBookById(id, req.user.userId);
     }
 
     // Создать новую книгу
@@ -48,7 +49,8 @@ export class BooksController {
 
     // Удалить книгу
     @Delete(':id')
-    async deleteBook(@Param('id') id: number) {
-        return this.booksService.removeBook(id);
+    @UseGuards(JwtAuthGuard)
+    async deleteBook(@Param('id') id: number, @Request() req: any) {
+        return this.booksService.removeBook(id, req.user.userId);
     }
 }

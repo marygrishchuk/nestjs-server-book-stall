@@ -15,7 +15,12 @@ export class BooksService {
     }
 
     // Получить книгу по ID
-    async getBookById(id: number): Promise<Book> {
+    async getBookById(id: number, userId: number): Promise<Book> {
+        const user = await this.usersRepository.findByIdOrNotFoundFail(userId);
+        const book = await this.booksRepository.findOneOrNotFoundFail(id);
+        if (user.age < 18 && book.ageRestriction >= 18) {
+            throw new ForbiddenException('too young, Bro')
+        }
         return this.booksRepository.findOneOrNotFoundFail(id);
     }
 
@@ -38,7 +43,11 @@ export class BooksService {
     }
 
     // Удалить книгу
-    async removeBook(id: number): Promise<void> {
+    async removeBook(id: number, userId: number): Promise<void> {
+        const book = await this.booksRepository.findOneOrNotFoundFail(id);
+        if (userId !== book.ownerId) {
+            throw new ForbiddenException();
+        }
         await this.booksRepository.remove(id);
     }
 }
