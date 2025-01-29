@@ -2,7 +2,7 @@
 
 It's a test project set up to work with a local Postgres Database.
 - Make sure .env file is updated locally with your Database password
-- Base URL for the [Book Stall app](https://nest-webinar-front.vercel.app/) is http://localhost:5001 which is where this NestJS server is running
+- Base URL for the [Book Stall app](https://nest-webinar-front.vercel.app/) is http://localhost:5001 which is where this NestJS server is running as per .env file.
 
 
 ## About Nest:
