@@ -1,23 +1,29 @@
-import { Entity, Column } from 'typeorm';
+import { ForbiddenException } from '@nestjs/common';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../../core/entity/base.entity';
 import { CreateBookDto } from './dto/create-book.dto';
-import { ForbiddenException } from '@nestjs/common';
 import { UpdateBookDto } from './dto/update-book.dto';
 
 @Entity('books')
 export class Book extends BaseEntity {
+    @ApiProperty({ example: 'Sherlock Holmes', description: 'A book\'s title', minLength: 2 })
     @Column()
     title: string;
 
+    @ApiProperty({ example: 'Artur Conan Doyle', description: 'A book\'s author' })
     @Column()
     author: string;
 
+    @ApiProperty({ example: 18, description: 'Age restriction for a book', minimum: 0, maximum: 120 })
     @Column()
-    ageRestriction: number; //возрастные ограничения на книгу
+    ageRestriction: number;
 
+    @ApiProperty({ example: 1822, description: 'An id of a user who added the book' })
     @Column()
-    ownerId: number; //id пользователя, который добавил книгу
+    ownerId: number; // an id of a user who added the book
 
+    @ApiPropertyOptional({ example: 'https://some-website.net/book-cover', description: 'A URL for a book cover picture' })
     @Column({ nullable: true })
     image?: string;
 

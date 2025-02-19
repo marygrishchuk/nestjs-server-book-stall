@@ -1,20 +1,20 @@
 import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { BooksRepository } from './books.repository';
-import { Book } from './book.entity';
-import { CreateBookDto } from './dto/create-book.dto';
 import { UsersRepository } from '../users/users.repository';
+import { Book } from './book.entity';
+import { BooksRepository } from './books.repository';
+import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
 @Injectable()
 export class BooksService {
     constructor(private readonly booksRepository: BooksRepository, private usersRepository: UsersRepository) { }
 
-    // Получить список всех книг
+    // Get the list of all books
     async getAllBooks(): Promise<Book[]> {
         return this.booksRepository.findAll();
     }
 
-    // Получить книгу по ID
+    // Get a specific book by its ID
     async getBookById(id: number, userId?: number): Promise<Book> {
         const book = await this.booksRepository.findOneOrNotFoundFail(id);
         if (book.ageRestriction >= 18) {
@@ -27,7 +27,7 @@ export class BooksService {
         return this.booksRepository.findOneOrNotFoundFail(id);
     }
 
-    // Создать новую книгу
+    // Create (add) a new book
     async createBook(dto: CreateBookDto, userId: number): Promise<void> {
         const user = await this.usersRepository.findByIdOrNotFoundFail(userId);
 
@@ -36,7 +36,7 @@ export class BooksService {
         await this.booksRepository.save(book);
     }
 
-    // Обновить информацию о книге
+    // Update a book info
     async updateBook(id: number, dto: UpdateBookDto, userId: number): Promise<void> {
         const book = await this.booksRepository.findOneOrNotFoundFail(id);
 
@@ -45,7 +45,7 @@ export class BooksService {
         await this.booksRepository.save(book);
     }
 
-    // Удалить книгу
+    // Delete a book
     async removeBook(id: number, userId: number): Promise<void> {
         const book = await this.booksRepository.findOneOrNotFoundFail(id);
         if (userId !== book.ownerId) {
