@@ -29,7 +29,7 @@ async function bootstrap() {
 
   // getting the config service https://docs.nestjs.com/techniques/configuration#using-in-the-maints
   const configService = app.get(ConfigService<ConfigurationType>);
-  const port = configService.get('apiSettings.PORT', { infer: true })!;
+  const port = configService.get('apiSettings.PORT', { infer: true }) || 3000;
 
   await app.listen(port);
 }
