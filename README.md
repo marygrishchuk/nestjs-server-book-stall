@@ -14,7 +14,7 @@ It's a hobby project set up to work with any Postgres database, credentials of w
 - Base URL for testing it in the [Book Stall app](https://nest-webinar-front.vercel.app/): http://localhost:5001 which is where the local version of this NestJS server is running as per .env file.
 
 ### API docs
-- Swagger docs for this REST API server are available at <Base URL>/api: https://nestjs-server-book-stall.onrender.com/api or http://localhost:5001/api
+- Swagger docs for this REST API server are available at {Base URL}/api: https://nestjs-server-book-stall.onrender.com/api or http://localhost:5001/api
 - Some endpoints require authorization in order to 'Try them out' in Swagger docs. Please click 'Authorize' and enter your accessToken received when logging in via 'auth' endpoint.
 
 ## About Nest:
