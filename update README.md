@@ -1,9 +1,21 @@
 # NestJS Server app for a [Book Stall app](https://nest-webinar-front.vercel.app/)
 
-It's a test project set up to work with a local Postgres Database.
-- Make sure .env file is updated locally with your Database info & credentials. Keep them secret.
-- Base URL for the [Book Stall app](https://nest-webinar-front.vercel.app/) is http://localhost:5001 which is where this NestJS server is running as per .env file.
+## About the project:
 
+It's a hobby project set up to work with any Postgres database, credentials of which are added to .env file.
+
+### Testing out a deployed version of this server
+- This server is deployed on Render and connected to Supabase DB.
+- Base URL for testing it in the [Book Stall app](https://nest-webinar-front.vercel.app/): https://nestjs-server-book-stall.onrender.com
+
+### Testing it out locally
+- When running this server locally, you can use your local pgAdmin DB or any remote postgres DB such as Supabase.
+- Make sure .env file is updated locally with your database info & credentials. Keep them secret.
+- Base URL for testing it in the [Book Stall app](https://nest-webinar-front.vercel.app/): http://localhost:5001 which is where the local version of this NestJS server is running as per .env file.
+
+### API docs
+- Swagger docs for this REST API server are available at <Base URL>/api: https://nestjs-server-book-stall.onrender.com/api or http://localhost:5001/api
+- Some endpoints require authorization in order to 'Try them out' in Swagger docs. Please click 'Authorize' and enter your accessToken received when logging in via 'auth' endpoint.
 
 ## About Nest:
 
